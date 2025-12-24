@@ -339,7 +339,7 @@ The chart is available at the repository ```https://fiware.github.io/data-space-
 **Note,** that due to the app-of-apps structure of the connector and the different dependencies between the components, a deployment without providing any configuration values will not work. Make sure to provide a 
 `values.yaml` file for the deployment, specifying all necessary parameters. This includes setting parameters of the connected data space (e.g., trust anchor endpoints), DNS information (providing Ingress or OpenShift Route parameters), 
 structure and type of the required VCs, internal hostnames of the different connector components and providing the configuration of the DID and keys/certs.  
-Also have a look at the [examples](#examples).
+Also have a look at the [examples](./examples).
 
 Configurations for all sub-charts (and sub-dependencies) can be managed through the top-level [values.yaml](./charts/data-space-connector/values.yaml) of the chart. It contains the default values of each component and additional parameter shared between the components. The configuration of the applications can be changed under the key ```<APPLICATION_NAME>```, please see the individual applications and there sub-charts for the available options.  
 Example:
