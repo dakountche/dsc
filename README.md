@@ -334,7 +334,7 @@ The chart is available at the repository ```https://fiware.github.io/data-space-
     # add the repo
     helm repo add dsc https://fiware.github.io/data-space-connector/
     # install the chart
-    helm install <DeploymentName> dsc/data-space-connector -n <Namespace> -f values.yaml
+    helm install dsc dsc/data-space-connector -n dsc -f examples/values.yaml
 ```
 **Note,** that due to the app-of-apps structure of the connector and the different dependencies between the components, a deployment without providing any configuration values will not work. Make sure to provide a 
 `values.yaml` file for the deployment, specifying all necessary parameters. This includes setting parameters of the connected data space (e.g., trust anchor endpoints), DNS information (providing Ingress or OpenShift Route parameters), 
