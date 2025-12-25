@@ -5,4 +5,4 @@ kind: Secret
 metadata:
   creationTimestamp: null
   name: signing-key
-  namespace: provider
+  namespace: {{ .Values.global.provider }}
