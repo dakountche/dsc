@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 
 global:
-  consumer: fiware-sdc-consumer01
+  consumer: fiware-dsc-consumer01
 
-  provider: fiware-sdc-provider01
+  provider: fiware-dsc-provider01
 
   trustanchor: trust-anchor

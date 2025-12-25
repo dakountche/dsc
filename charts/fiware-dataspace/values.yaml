@@ -5,11 +5,11 @@
 global:
   consumer:
     domainSuffix: dataconsumer.fr
-    namespace: fiware-sdc-consumer01
+    namespace: fiware-dsc-consumer01
 
   provider:
     domainSuffix: dataprovider.fr
-    namespace: fiware-sdc-provider01
+    namespace: fiware-dsc-provider01
 
   trustanchor:
     domainSuffix: trust-anchor.fr

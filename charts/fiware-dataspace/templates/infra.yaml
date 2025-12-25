@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 'fiware-sdc-infra'
+  name: 'fiware-dsc-infra'
   namespace: argocd
 spec:
   project: default
