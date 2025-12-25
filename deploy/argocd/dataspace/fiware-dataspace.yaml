@@ -21,6 +21,6 @@ spec:
 
           trust-anchor:
             domainSuffix: trust-anchor.fr
-            namespace: fiware-dsc-trust-anchor
+            namespace: trust-anchor
   destination:
       server: 'https://kubernetes.default.svc'

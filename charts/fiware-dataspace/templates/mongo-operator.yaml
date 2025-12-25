@@ -14,12 +14,12 @@ spec:
         mongo-operator:
           enabled: true
           database:
-            namespace: provider
+            namespace: fiware-dsc-provider01
           operator:
             watchNamespace: "*"
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: 'fiware-mvd-provider01'
+    namespace: 'fiware-dsc-provider01'
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
