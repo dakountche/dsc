@@ -11,15 +11,17 @@ spec:
     chart: fiware-dataspace
     helm:
       values: |
-        project: default
-        participants:
-          consumers: 
-            - fiware-dsc-consumer01
-          producers: 
-            - fiware-dsc-producer01
-          trust-anchor: trust-anchor
-        domainSuffix: fiware-dataspace.ds
-        issuer: fiware-issuer
-     chart:
+        global:
+          consumer:
+            domainSuffix: dataconsumer.fr
+            namespace: fiware-sdc-consumer01
+
+          provider:
+            domainSuffix: dataprovider.fr
+            namespace: fiware-sdc-provider01
+
+          trust-anchor:
+            domainSuffix: trust-anchor.fr
+            namespace: trust-anchor
   destination:
       server: 'https://kubernetes.default.svc'
