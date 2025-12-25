@@ -6,21 +6,21 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/dakountche/dsc.git'
-    targetRevision: dev
     path: charts/fiware-dataspace
+    targetRevision: dev
     helm:
       values: |
         global:
           consumer:
             domainSuffix: dataconsumer.fr
-            namespace: fiware-sdc-consumer01
+            namespace: fiware-dsc-consumer01
 
           provider:
             domainSuffix: dataprovider.fr
-            namespace: fiware-sdc-provider01
+            namespace: fiware-dsc-provider01
 
           trust-anchor:
             domainSuffix: trust-anchor.fr
-            namespace: trust-anchor
+            namespace: fiware-dsc-trust-anchor
   destination:
       server: 'https://kubernetes.default.svc'
