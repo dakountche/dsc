@@ -3,14 +3,8 @@
 # Declare variables to be passed into your templates.
 
 global:
-  consumer:
-    domainSuffix: dataconsumer.fr
-    namespace: fiware-sdc-consumer01
+  consumer: fiware-sdc-consumer01
 
-  provider:
-    domainSuffix: dataprovider.fr
-    namespace: fiware-sdc-provider01
+  provider: fiware-sdc-provider01
 
-  trustanchor:
-    domainSuffix: trust-anchor.fr
-    namespace: trust-anchor
+  trustanchor: trust-anchor
