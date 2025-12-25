@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1aplpha1
 kind: Application
 metadata:
   name: 'mongo-operator'
+  namespace: argocd
 spec:
   project: default
   source:

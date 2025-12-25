@@ -6,9 +6,8 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/dakountche/dsc.git'
-    targetRevision: HEAD
-    path: charts
-    chart: fiware-dataspace
+    targetRevision: dev
+    path: charts/fiware-dataspace
     helm:
       values: |
         global:
