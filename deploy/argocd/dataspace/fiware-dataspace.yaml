@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 'fiware-dataspace-deployer'
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/dakountche/dsc.git'
+    targetRevision: HEAD
+    path: charts
+    chart: fiware-dataspace
+    helm:
+      values: |
+        project: default
+        participants:
+          consumers: 
+            - fiware-dsc-consumer01
+          producers: 
+            - fiware-dsc-producer01
+          trust-anchor: trust-anchor
+        domainSuffix: fiware-dataspace.ds
+        issuer: fiware-issuer
+     chart:
+  destination:
+      server: 'https://kubernetes.default.svc'
