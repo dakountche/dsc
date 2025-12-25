@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: 'fiware-dataspace-deployer'
+  namespace: argocd
 spec:
   project: default
   source:
@@ -24,3 +25,7 @@ spec:
             namespace: trust-anchor
   destination:
       server: 'https://kubernetes.default.svc'
+  syncPolicy:
+    automated:
+      prune: true
+
