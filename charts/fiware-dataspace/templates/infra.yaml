@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1aplpha1
+kind: Application
+metadata:
+  name: 'infra'
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/dakountche/dsc.git'
+    targetRevision: HEAD
+    chart: infra
+    path: charts
+    helm:
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: 'infra'

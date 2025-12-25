@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1aplpha1
+kind: Application
+metadata:
+  name: 'trust-anchor'
+spec:
+  project: default
+  source:
+    repoURL: 'https://fiware.github.io/data-space-connector/'
+    targetRevision: HEAD
+    chart: trust-anchor
+    helm:
+      values: |
+        trusted-issuers-list:
+          # -- it should work as the TrustedIssuersRegistry of the dataspace, thus we publish this api only
+          ingress:
+            tir:
+              enabled: true
+              hosts:
+                - host: tir.{{ .Values.global.trust-anchor.domainSuffix }}
+            til:
+              enabled: true
+              hosts:
+                - host: til.{{ .Values.global.trust-anchor.domainSuffix }}
+
+        mysql:
+          primary:
+            persistence:
+              enabled: false
+          secondary:
+            persistence:
+              enabled: false
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: {{ .Values.global.trust-anchor.namespace }}
