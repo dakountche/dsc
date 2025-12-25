@@ -16,11 +16,11 @@ spec:
             tir:
               enabled: true
               hosts:
-                - host: tir."{{ .Values.global.trust-anchor.domainSuffix }}"
+                - host: {{ print "tir." .Values.global.trust-anchor.domainSuffix }}
             til:
               enabled: true
               hosts:
-                - host: til."{{ .Values.global.trust-anchor.domainSuffix }}"
+                - host: {{ print "til." .Values.global.trust-anchor.domainSuffix }}
 
         mysql:
           primary:
