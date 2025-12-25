@@ -16,11 +16,11 @@ spec:
             tir:
               enabled: true
               hosts:
-                - host: {{ .Values.global.trust-anchor.domainSuffix }}
+                - host: tir.{{ .Values.global.trustanchor.domainSuffix }}
             til:
               enabled: true
               hosts:
-                - host: {{ .Values.global.trust-anchor.domainSuffix }}
+                - host: til.{{ .Values.global.trustanchor.domainSuffix }}
 
         mysql:
           primary:
@@ -31,4 +31,4 @@ spec:
               enabled: false
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: {{ .Values.global.trust-anchor.namespace }}
+    namespace: {{ .Values.global.trustanchor.namespace }}

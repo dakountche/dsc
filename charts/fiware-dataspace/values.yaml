@@ -11,6 +11,6 @@ global:
     domainSuffix: dataprovider.fr
     namespace: fiware-sdc-provider01
 
-  trust-anchor:
+  trustanchor:
     domainSuffix: trust-anchor.fr
     namespace: trust-anchor
