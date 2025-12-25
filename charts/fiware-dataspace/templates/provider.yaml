@@ -1131,7 +1131,7 @@ spec:
         prepScript: export $(curl -f -X GET did-helper:3002/did-material/did.env)
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: fiware-sdc-provider01
+    namespace: {{ .Values.global.provider.namespace }}
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
