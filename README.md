@@ -53,7 +53,7 @@ The FIWARE Data Space Connector is an integrated suite of components every organ
 in a data space should deploy to “connect” to a data space. Following the DSBA recommendations, it 
 allows to: 
 
-* Interface with Trust Services aligned with [EBSI specifications](https://api-pilot.ebsi.eu/docs/apis)
+* Interface with Trust Services aligned with [EBSI specifications](https://hub.ebsi.eu/apis)
 * Implement authentication based on [W3C DID](https://www.w3.org/TR/did-core/) with 
   [VC/VP standards](https://www.w3.org/TR/vc-data-model/) and 
   [SIOPv2](https://openid.net/specs/openid-connect-self-issued-v2-1_0.html#name-cross-device-self-issued-op) / 
