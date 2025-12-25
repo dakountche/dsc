@@ -1124,7 +1124,7 @@ spec:
       registration:
         enabled: true
         configMap: provider-til-registration
-        til: http://trusted-issuers-list.provider.svc.cluster.local:8080
+        til: http://trusted-issuers-list.trust-anchor.svc.cluster.local:8080
         did: did:web:mp-operations.org
         credentialTypes:
           - LegalPersonCredential
