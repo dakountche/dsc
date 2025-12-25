@@ -7,12 +7,14 @@ spec:
   project: default
   source:
     repoURL: 'https://fiware.github.io/data-space-connector/'
-    targetRevision: HEAD
+    targetRevision: 0.2.1
     chart: trust-anchor
     helm:
       values: |
         trusted-issuers-list:
           # -- it should work as the TrustedIssuersRegistry of the dataspace, thus we publish this api only
+          database:
+            persistence: false
           ingress:
             tir:
               enabled: true
@@ -24,6 +26,7 @@ spec:
                 - host: til.{{ .Values.global.trustanchor.domainSuffix }}
 
         mysql:
+          enabled: false
           primary:
             persistence:
               enabled: false
