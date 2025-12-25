@@ -32,7 +32,7 @@ spec:
               enabled: false
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: {{ .Values.global.trustanchor.namespace }}
+    namespace: trust-anchor
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
