@@ -1211,7 +1211,7 @@ spec:
             host: contract-management
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: {{ .Values.global.consumer.namesapce }}
+    namespace: {{ .Values.global.consumer.namespace }}
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
