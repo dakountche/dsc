@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://fiware.github.io/data-space-connector/'
-    targetRevision: 0.2.1
+    targetRevision: HEAD
     chart: trust-anchor
     helm:
       values: |
