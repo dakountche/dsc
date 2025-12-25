@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: fiware-provider
+  name: {{ .Values.global.provider.namespace }}
   namespace: argocd
 spec:
   project: default
@@ -203,7 +203,7 @@ spec:
                   credentials:
                     - type: LegalPersonCredential
                       trustedParticipantsLists:
-                        - http://tir.{{ .Values.global.provider.domainSuffix }}
+                        - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
                         - http://trusted-issuers-list:8080
                       jwtInclusion:
@@ -232,7 +232,7 @@ spec:
                   credentials:
                     - type: UserCredential
                       trustedParticipantsLists:
-                        - http://tir.{{ .Values.global.provider.domainSuffix }}
+                        - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
                         - http://trusted-issuers-list:8080
                       jwtInclusion:
@@ -250,7 +250,7 @@ spec:
                   credentials:
                     - type: LegalPersonCredential
                       trustedParticipantsLists:
-                        - http://tir.{{ .Values.global.provider.domainSuffix }}
+                        - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
                         - http://trusted-issuers-list:8080
                       jwtInclusion:
@@ -275,7 +275,7 @@ spec:
                   credentials:
                     - type: OperatorCredential
                       trustedParticipantsLists:
-                        - http://tir.{{ .Values.global.provider.domainSuffix }}
+                        - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
                         - http://trusted-issuers-list:8080
                       jwtInclusion:
@@ -297,7 +297,7 @@ spec:
                   credentials:
                     - type: OperatorCredential
                       trustedParticipantsLists:
-                        - http://tir.{{ .Values.global.provider.domainSuffix }}
+                        - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
                         - http://trusted-issuers-list:8080
                       jwtInclusion:
@@ -311,7 +311,7 @@ spec:
                   credentials:
                     - type: MarketplaceCredential
                       trustedParticipantsLists:
-                        - http://tir.{{ .Values.global.provider.domainSuffix }}
+                        - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
                         - "*"
                       jwtInclusion:
@@ -343,7 +343,7 @@ spec:
           logging:
             level: DEBUG
           verifier:
-            tirAddress: http://tir.{{ .Values.global.provider.domainSuffix }}/
+            tirAddress: http://tir.{{ .Values.global.trustanchor.domainSuffix }}/
             did: did:web:mp-operations.org
             supportedModes: ["byValue", "byReference"]
             clientIdentification:
