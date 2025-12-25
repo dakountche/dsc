@@ -183,6 +183,9 @@ spec:
                 with_body: true
 
       credentials-config-service:
+        deployment:
+          image:
+            tag: 3.3.3
         ingress:
           enabled: true
           hosts:

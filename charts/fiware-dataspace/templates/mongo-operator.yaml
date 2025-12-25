@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 'mongo-operator'
+  name: 'fiware-sdc-mongo-operator'
   namespace: argocd
 spec:
   project: default
