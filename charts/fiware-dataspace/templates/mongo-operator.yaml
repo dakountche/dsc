@@ -19,3 +19,7 @@ spec:
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: 'fiware-mvd-provider01'
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
