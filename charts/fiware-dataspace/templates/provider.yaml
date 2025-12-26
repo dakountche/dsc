@@ -538,22 +538,22 @@ spec:
             ## Config for the TM Forum Service hosting the APIs
             product-order:
               ## URL of the TM Forum Service hosting the Product Ordering API
-              url: http://provider-tm-forum-api-product-ordering-management.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
+              url: http://{{ .Values.global.provider.namespace }}-tm-forum-api-product-ordering-management.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
             party:
               ## URL of the TM Forum Service hosting the Party API
-              url: http://provider-tm-forum-api-party-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
+              url: http://{{ .Values.global.provider.namespace }}-tm-forum-api-party-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
             product-catalog:
               ## URL of the TM Forum Service hosting the Product Catalog API
-              url: http://provider-tm-forum-api-product-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
+              url: http://{{ .Values.global.provider.namespace }}-tm-forum-api-product-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
             service-catalog:
               ## URL of the TM Forum Service hosting the Service Catalog API
-              url: http://provider-tm-forum-api-service-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
+              url: http://{{ .Values.global.provider.namespace }}-tm-forum-api-service-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
             tmforum-agreement-api:
               ## URL of the TM Forum Service hosting the Agreement API
-              url: http://provider-tm-forum-api-agreement.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
+              url: http://{{ .Values.global.provider.namespace }}-tm-forum-api-agreement.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
             quote:
               ## URL for TM Forum Service hosting the Quote API
-              url: http://provider-tm-forum-api-quote.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
+              url: http://{{ .Values.global.provider.namespace }}-tm-forum-api-quote.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
             rainbow:
               ## URL for the Rainbow service
               url: http://rainbow-provider.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
@@ -561,7 +561,7 @@ spec:
               ## URL for the ODRL-PAP
               url: http://odrl-pap.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
           notification:
-            host: "http://localhost:8080"
+            host: "contract-management"
           additionalEnvVars:
             - name: LOGGER_LEVELS_ROOT
               value: DEBUG
