@@ -32,7 +32,7 @@ recipes.
   - [Integration with the Dataspace Protocol](#integration-with-the-dataspace-protocol)
   - [Integration with the Gaia-X Trust Framework](#integration-with-the-gaia-x-trust-framework)
 - [Deployment](#deployment)
-  - [Local Deployment](#local-deployment)
+  - [FIWARE Dataspace MVD on Kubernetes](#local-deployment)
   - [Deployment with Helm](#deployment-with-helm)
 - [Testing](#testing)
 - [Additional documentation and resources](#additional-documentation-and-resources)
@@ -309,18 +309,49 @@ Find out more in the dedicated [Gaia-X Integration Documentation](./doc/GAIA_X.M
 
 ## Deployment
 
-### Local Deployment
+### FIWARE Dataspace MVD on Kubernetes using ArgoCD
 
-The FIWARE Data Space Connector provides a local deployment of a Minimal Viable Dataspace. 
+This deployment on Kubernetes is an adaption of the original one to allow the deployment on any K8s cluster. 
 * Find a detailed documentation here: [Local Deployment](./doc/deployment-integration/local-deployment/LOCAL.MD)
 
 This deployment allows to easily spin up such minimal data space on a local machine, by just using 
-[Maven](https://maven.apache.org/) and [Docker](https://www.docker.com/) (with [k3s](https://k3s.io/)), and 
-can be used to try-out the connector, to get familiar with the different components and flows within the data space 
-or to perform 
-tests with the different APIs provided.
+[ArgoCD](https://argoproj.github.io/cd/) and a Kubernetes cluster to try-out the connector, to get familiar with the different components and flows within the data space 
+or to perform tests with the different APIs provided. The MVD can be deployed using the ArgoCD application below:
 
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 'fiware-dataspace-deployer'
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/background
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/dakountche/dsc.git'
+    path: charts/fiware-dataspace
+    targetRevision: dev
+    helm:
+      values: |
+        global:
+          consumer:
+            domainSuffix: dataconsumer.fr
+            namespace: fiware-dsc-consumer01
 
+          provider:
+            domainSuffix: dataprovider.fr
+            namespace: fiware-dsc-provider01
+
+          trust-anchor:
+            domainSuffix: trust-anchor.fr
+            namespace: trust-anchor
+  destination:
+      server: 'https://kubernetes.default.svc'
+  syncPolicy:
+    automated:
+      prune: true
+```
 
 
 ### Deployment with Helm
