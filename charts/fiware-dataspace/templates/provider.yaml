@@ -524,7 +524,7 @@ spec:
           host: http://rainbow-provider.{{ .Values.global.provider.domainSuffix }}:8080
           path: transfers
       contract-management:
-        did: did:web:mp-operations.org
+        did: "did:web:mp-operations.org"
         enableCentralMarketplace: true
         services:
           ## Config for Trusted Issuers List
