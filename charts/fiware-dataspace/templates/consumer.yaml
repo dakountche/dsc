@@ -881,6 +881,9 @@ spec:
               traefik.ingress.kubernetes.io/router.tls: "true"
 
         # register the consumer at the til. Only possible if it runs in the same environment and recommendable for demo deployments
+        trusted-issuers-list:
+          database:
+            host: authentication-mysql.{{ .Values.global.consumer.namespace }}.svc.cluster.local
         registration:
           enabled: true
           configMap: consumer-til-registration

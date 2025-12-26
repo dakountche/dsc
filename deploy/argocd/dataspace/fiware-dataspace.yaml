@@ -4,7 +4,7 @@ metadata:
   name: 'fiware-dataspace-deployer'
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io/background
 spec:
   project: default
   source:
