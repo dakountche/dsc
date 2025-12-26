@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: 'fiware-dataspace-deployer'
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
