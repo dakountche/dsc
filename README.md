@@ -74,9 +74,7 @@ as data (processing) service provider, consumer of data (processing) services, o
 
 Technically, the FIWARE Data Space Connector is a 
 [Helm Umbrella-Chart](https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies), 
-containing all the sub-charts and their dependencies for deployment via Helm.  
-Thus, being provided as Helm chart, the FIWARE Data Space Connector can be deployed on 
-[Kubernetes](https://kubernetes.io/) environments.
+containing all the sub-charts and their dependencies for deployment via Helm  on [Kubernetes](https://kubernetes.io/) environments.
 
 ## Release Information
 
