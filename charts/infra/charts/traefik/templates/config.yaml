@@ -29,7 +29,7 @@ data:
       traefik:
         address: ":8090"
       websecure:
-        address: ":443"
+        address: ":8443"
       http:
         address: ":8080"
     tls:
