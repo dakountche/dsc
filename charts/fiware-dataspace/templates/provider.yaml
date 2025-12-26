@@ -418,6 +418,8 @@ spec:
                   apt-get -y update; apt-get -y install curl
                   curl -X 'POST' 'http://tir.trust-anchor.svc.cluster.local:8080/issuer' -H 'Content-Type: application/json' -d "{\"did\": \"did:web:mp-operations.org\", \"credentials\": []}"
       mysql:
+        image:
+          tag: 8.1.0-debian-11-r25
         resourcesPreset: none
         primary:
           persistence:
