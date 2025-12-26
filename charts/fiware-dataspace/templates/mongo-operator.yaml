@@ -16,13 +16,15 @@ spec:
         mongo-operator:
           enabled: true
           database:
-            namespace: fiware-dsc-provider01
+            namespace: {{ .Values.global.provider.namespace }}
           operator:
             watchNamespace: "*"
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: 'fiware-dsc-provider01'
+    namespace: {{ .Values.global.provider.namespace }}  
   syncPolicy:
+    automated:
+      prune: true
     syncOptions:
     - CreateNamespace=true
 
