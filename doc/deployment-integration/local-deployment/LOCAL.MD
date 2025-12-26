@@ -6,13 +6,10 @@ An alternative deployment guide, based on [MicroK8s](https://microk8s.io/) can b
 
 ## Requirements
 
-Since the local deployment installs 2 connector instances and a trust-anchor, its recommended to use a strong enough machine. While 16Gb Ram might be enough, its recommended to have >24Gb available. The deployment is build and tested on Ubuntu, most other Linux distributions should work as well.
+Since the local deployment installs 2 connector instances and a trust-anchor, its recommended to use a Kubernetes cluster with: 
 
-The local deployment tries to be as decoupled from the host system as possible to reduce the amount of requirements but stills needs the following programs:
-
-- [Maven](https://maven.apache.org/)
-- Java Development Kit (at least v17)
-- [Docker](https://www.docker.com/)
+- [ExternalDNS](https://github.com/kubernetes-sigs/external-dns)
+- [ArgoCD](https://argoproj.github.io/cd/)
 
 In order to interact with the system, the following tools are also helpful:
 
@@ -21,38 +18,31 @@ In order to interact with the system, the following tools are also helpful:
 - [jq](https://stedolan.github.io/jq/download/)
 - [yq](https://mikefarah.gitbook.io/yq/)
 
-To check if the tools are installed, can run and are able to spin up minimal kubernetes cluster without further FIWARE components, you should execute the prepared [script](checkRequirements.sh).
-
-Issues revealed by the script are most likely due to incompatibility of your system or faulty installation of the required tools.
-
 
 ## Quick Start
 
-> :warning: The local deployment uses [k3s](https://k3s.io/) and is currently only tested on linux.
-> Its not recommended to use it on Windows or Mac Systems.
+### Configure the ArgoCD application
 
-> :warning: In current Linux installations, ```br_netfilter``` is disabled by default. That leads to networking issues inside the k3s cluster and will prevent the connector to start up properly. Make sure that its enabled via ```modprobe br_netfilter```. See [Stackoverflow](https://stackoverflow.com/questions/48148838/kube-dns-error-reply-from-unexpected-source/48151279#48151279) for more.
+Prior to deploying the Dataspace, the ArgoCD application must be modified to set:
+- A domain name for the consumer
+- A domain name for the procucer
+- A domain name for the trust-ancher
+
+
+### Deploy the Dataspace 
 
 To start the Data Space, just use:
 
 ```shell
-    mvn clean deploy -Plocal
+    kubectl -n argocd apply -f deploy/argocd/dataspace/fiware-dataspace.yaml
 ```
 
-Depending on the machine, it should take between 5 and 10min to spin up the complete data space. You can connect to the
-running k3s-cluster via:
-
-```shell
-    export  KUBECONFIG=$(pwd)/target/k3s.yaml
-    # get all deployed resources
-    kubectl get all --all-namespaces
-```
 
 ## The Data Space
 
 ![Overview](../../img/local/overview.jpg)
 
-The locally deployed Data Space consists of 2 Participants, connected through a Trust Anchor.
+The deployed Data Space consists of 2 Participants, connected through a Trust Anchor.
 
 ### The Trust Anchor
 
