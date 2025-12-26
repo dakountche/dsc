@@ -557,7 +557,7 @@ spec:
             ## URL for the ODRL-PAP
             url: http://odrl-pap.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
         notification:
-          host: "contract-management"
+          host: "http://contract-management:8080"
         additionalEnvVars:
           - name: LOGGER_LEVELS_ROOT
             value: DEBUG

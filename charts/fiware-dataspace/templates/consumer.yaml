@@ -916,7 +916,7 @@ spec:
                   - "/"
         # authentication configuration
         credentials-config-service:
-          deploymennt:
+          deployment:
             image:
               tag: 3.3.3
           additionalEnvVars:
