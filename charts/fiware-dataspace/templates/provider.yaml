@@ -210,7 +210,7 @@ spec:
                       trustedParticipantsLists:
                         - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
-                        - http://trusted-issuers-list:8080
+                        - http://trusted-issuers-list.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
                       jwtInclusion:
                         enabled: true
                         fullInclusion: true
@@ -239,7 +239,7 @@ spec:
                       trustedParticipantsLists:
                         - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
-                        - http://trusted-issuers-list:8080
+                        - http://trusted-issuers-list.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
                       jwtInclusion:
                         enabled: true
                         fullInclusion: true
@@ -257,7 +257,7 @@ spec:
                       trustedParticipantsLists:
                         - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
-                        - http://trusted-issuers-list:8080
+                        - http://trusted-issuers-list{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
                       jwtInclusion:
                         enabled: true
                         fullInclusion: true
@@ -282,7 +282,7 @@ spec:
                       trustedParticipantsLists:
                         - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
-                        - http://trusted-issuers-list:8080
+                        - http://trusted-issuers-list.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
                       jwtInclusion:
                         enabled: true
                         fullInclusion: true
@@ -304,7 +304,7 @@ spec:
                       trustedParticipantsLists:
                         - http://tir.{{ .Values.global.trustanchor.domainSuffix }}
                       trustedIssuersLists:
-                        - http://trusted-issuers-list:8080
+                        - http://trusted-issuers-list.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
                       jwtInclusion:
                         enabled: true
                         fullInclusion: true
@@ -528,32 +528,32 @@ spec:
           ## Config for Trusted Issuers List
           trusted-issuers-list:
             ## URL of the Trusted Issuers List Service
-            url: http://trusted-issuers-list:8080
+            url: http://trusted-issuers-list.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
           ## Config for the TM Forum Service hosting the APIs
           product-order:
             ## URL of the TM Forum Service hosting the Product Ordering API
-            url: http://provider-tm-forum-api-product-ordering-management:8080
+            url: http://provider-tm-forum-api-product-ordering-management.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
           party:
             ## URL of the TM Forum Service hosting the Party API
-            url: http://provider-tm-forum-api-party-catalog:8080
+            url: http://provider-tm-forum-api-party-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
           product-catalog:
             ## URL of the TM Forum Service hosting the Product Catalog API
-            url: http://provider-tm-forum-api-product-catalog:8080
+            url: http://provider-tm-forum-api-product-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
           service-catalog:
             ## URL of the TM Forum Service hosting the Service Catalog API
-            url: http://provider-tm-forum-api-service-catalog:8080
+            url: http://provider-tm-forum-api-service-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
           tmforum-agreement-api:
             ## URL of the TM Forum Service hosting the Agreement API
-            url: http://provider-tm-forum-api-agreement:8080
+            url: http://provider-tm-forum-api-agreement.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
           quote:
             ## URL for TM Forum Service hosting the Quote API
-            url: http://provider-tm-forum-api-quote:8080
+            url: http://provider-tm-forum-api-quote.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
           rainbow:
             ## URL for the Rainbow service
-            url: http://rainbow:8080
+            url: http://rainbow-provider.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
           odrl:
             ## URL for the ODRL-PAP
-            url: http://odrl-pap:8080
+            url: http://odrl-pap.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080
         notification:
           enabled: true
           host: contract-management
@@ -635,47 +635,47 @@ spec:
               tag: 10.5.0
           extraEnvVars:
             - name: BAE_CB_CUSTOMER_BILL
-              value: "http://provider-tm-forum-api-customer-bill-management:8080/tmf-api/customerBillManagement/v4"
+              value: "http://provider-tm-forum-api-customer-bill-management.{{ .Values.global.provider.namespace }}.svc.cluster.local:8080/tmf-api/customerBillManagement/v4"
         bizEcosystemApis:
           tmForum:
             catalog:
-              host: provider-tm-forum-api-product-catalog
+              host: provider-tm-forum-api-product-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local
               port: 8080
               path: /tmf-api/productCatalogManagement/v4
             inventory:
-              host: provider-tm-forum-api-product-inventory
+              host: provider-tm-forum-api-product-inventory.{{ .Values.global.provider.namespace }}.svc.cluster.local
               port: 8080
               path: /tmf-api/productInventory/v4
             ordering:
-              host: provider-tm-forum-api-product-ordering-management
+              host: provider-tm-forum-api-product-ordering-management.{{ .Values.global.provider.namespace }}.svc.cluster.local
               port: 8080
               path: /tmf-api/productOrderingManagement/v4
             billing:
-              host: provider-tm-forum-api-account
+              host: provider-tm-forum-api-account.{{ .Values.global.provider.namespace }}.svc.cluster.local
               port: 8080
               path: /tmf-api/accountManagement/v4
             usage:
-              host: provider-tm-forum-api-usage-management
+              host: provider-tm-forum-api-usage-management.{{ .Values.global.provider.namespace }}.svc.cluster.local
               port: 8080
               path: /tmf-api/usageManagement/v4
             party:
-              host: provider-tm-forum-api-party-catalog
+              host: provider-tm-forum-api-party-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local
               port: 8080
               path: /tmf-api/party/v4
             customer:
-              host: provider-tm-forum-api-customer-management
+              host: provider-tm-forum-api-customer-management.{{ .Values.global.provider.namespace }}.svc.cluster.local
               port: 8080
               path: /tmf-api/customerManagement/v4
             resources:
-              host: provider-tm-forum-api-resource-catalog
+              host: provider-tm-forum-api-resource-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local
               port: 8080
               path: /tmf-api/resourceCatalog/v4
             services:
-              host: provider-tm-forum-api-service-catalog
+              host: provider-tm-forum-api-service-catalog.{{ .Values.global.provider.namespace }}.svc.cluster.local
               port: 8080
               path: /tmf-api/serviceCatalogManagement/v4
             resourceInventory:
-              host: provider-tm-forum-api-resource-inventory
+              host: provider-tm-forum-api-resource-inventory.{{ .Values.global.provider.namespace }}.svc.cluster.local
               port: 8080
               path: /tmf-api/resourceInventoryManagement/v4
         bizEcosystemLogicProxy:
