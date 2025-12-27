@@ -108,8 +108,5 @@ data:
     This really needs to be in place for it to be a proxy certificate.\nproxyCertInfo=critical,language:id-ppl-anyLanguage,pathlen:3,policy:foo\n"
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2025-12-27T08:50:09Z"
   name: openssl
-  namespace: default
-  resourceVersion: "21931587"
-  uid: c95fa873-660b-401a-b689-ac43235b68ca
+  namespace: infra

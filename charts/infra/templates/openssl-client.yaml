@@ -69,8 +69,5 @@ data:
     qct-web=OID:0.4.0.1862.1.6.3
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2025-12-27T08:50:23Z"
   name: openssl-client
-  namespace: default
-  resourceVersion: "21931669"
-  uid: 2902efc3-393b-4519-bc3a-a4dd28ac0f9c
+  namespace: infra
