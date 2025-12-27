@@ -1,0 +1,115 @@
+apiVersion: v1
+data:
+  openssl.cnf: "#\n# OpenSSL example configuration file.\n# This is mostly being used
+    for generation of certificate requests.\n#\n\n# Note that you can include other
+    files from the main configuration\n# file using the .include directive.\n#.include
+    filename\n\n# This definition stops the following lines choking if HOME isn't\n#
+    defined.\nHOME\t\t\t= .\n\n####################################################################\n[
+    ca ]\ndefault_ca\t= CA_default\t\t# The default ca section\n\n####################################################################\n[
+    CA_default ]\n\ndir\t\t= $ENV::OUTPUT_FOLDER\t\t\t# Where everything is kept\ncerts\t\t=
+    $dir/ca/certs\t\t# Where the issued certs are kept\ncrl_dir\t\t= $dir/crl\t\t#
+    Where the issued crl are kept\ndatabase\t= $dir/index.txt\t# database index file.\n#unique_subject\t=
+    no\t\t\t# Set to 'no' to allow creation of\n\t\t\t\t\t# several ctificates with
+    same subject.\nnew_certs_dir\t= $dir/ca/certs\t\t# default place for new certs.\n\ncertificate\t=
+    $dir/ca/certs/cacert.pem \t# The CA certificate\nserial\t\t= $dir/serial \t\t#
+    The current serial number\ncrlnumber\t= $dir/crlnumber\t# the current crl number\n\t\t\t\t\t#
+    must be commented out to leave a V1 CRL\ncrl\t\t= $dir/crl.pem \t\t# The current
+    CRL\nprivate_key\t= $dir/ca/private/cakey.pem# The private key\nRANDFILE\t= $dir/ca/private/.rand\t#
+    private random number file\n\n#x509_extensions\t= usr_cert\t\t# The extentions
+    to add to the cert\nx509_extensions\t= v3_ca\t\t# The extentions to add to the
+    cert\n\n# Comment out the following two lines for the \"traditional\"\n# (and
+    highly broken) format.\nname_opt \t= ca_default\t\t# Subject Name options\ncert_opt
+    \t= ca_default\t\t# Certificate field options\n\n# Extension copying option: use
+    with caution.\ncopy_extensions = copyall\n\n# Extensions to add to a CRL. Note:
+    Netscape communicator chokes on V2 CRLs\n# so this is commented out by default
+    to leave a V1 CRL.\n# crlnumber must also be commented out to leave a V1 CRL.\ncrl_extensions\t=
+    crl_ext\n\ndefault_days\t= 365\t\t\t# how long to certify for\ndefault_crl_days=
+    30\t\t\t# how long before next CRL\ndefault_md\t= sha256\t\t# which md to use.\npreserve\t=
+    no\t\t\t# keep passed DN ordering\n\n# A few difference way of specifying how
+    similar the request should look\n# For type CA, the listed attributes must be
+    the same, and the optional\n# and supplied fields are just that :-)\npolicy\t\t=
+    policy_match\n\n# For the CA policy\n[ policy_match ]\ncountryName\t\t= match\nstateOrProvinceName\t=
+    match\norganizationName\t= match\norganizationalUnitName\t= optional\ncommonName\t\t=
+    supplied\nemailAddress\t\t= optional\n\n# For the 'anything' policy\n# At this
+    point in time, you must list all acceptable 'object'\n# types.\n[ policy_anything
+    ]\ncountryName\t\t= optional\nstateOrProvinceName\t= optional\nlocalityName\t\t=
+    optional\norganizationName\t= optional\norganizationalUnitName\t= optional\ncommonName\t\t=
+    supplied\nemailAddress\t\t= optional\n####################################################################\n[
+    req ]\ndefault_bits\t\t= 2048\ndefault_keyfile \t= privkey.pem\ndistinguished_name\t=
+    req_distinguished_name\nattributes\t\t= req_attributes\nx509_extensions\t= v3_ca\t#
+    The extensions to add to the self signed cert\n\n# Passwords for private keys
+    if not present they will be prompted for\n# input_password = secret\n# output_password
+    = secret\n\n# This sets a mask for permitted string types. There are several options.\n#
+    default: PrintableString, T61String, BMPString.\n# pkix\t : PrintableString, BMPString
+    (PKIX recommendation before 2004)\n# utf8only: only UTF8Strings (PKIX recommendation
+    after 2004).\n# nombstr : PrintableString, T61String (no BMPStrings or UTF8Strings).\n#
+    MASK:XXXX a literal mask value.\n# WARNING: ancient versions of Netscape crash
+    on BMPStrings or UTF8Strings.\nstring_mask = utf8only\n\n# req_extensions = v3_req
+    # The extensions to add to a certificate request\n\n[ req_distinguished_name ]\ncountryName\t\t\t=
+    Country Name (2 letter code)\ncountryName_default\t\t= AU\ncountryName_min\t\t\t=
+    2\ncountryName_max\t\t\t= 2\n\nstateOrProvinceName\t\t= State or Province Name
+    (full name)\nstateOrProvinceName_default\t= Some-State\n\nlocalityName\t\t\t=
+    Locality Name (eg, city)\n\n0.organizationName\t\t= Organization Name (eg, company)\n0.organizationName_default\t=
+    Internet Widgits Pty Ltd\n\n# we can do this but it is not needed normally :-)\n#1.organizationName\t\t=
+    Second Organization Name (eg, company)\n#1.organizationName_default\t= World Wide
+    Web Pty Ltd\n\norganizationalUnitName\t\t= Organizational Unit Name (eg, section)\n#organizationalUnitName_default\t=\n\ncommonName\t\t\t=
+    Common Name (e.g. server FQDN or YOUR name)\ncommonName_max\t\t\t= 64\n\nemailAddress\t\t\t=
+    Email Address\nemailAddress_max\t\t= 64\n\n# SET-ex3\t\t\t= SET extension number
+    3\n\n[ req_attributes ]\nchallengePassword\t\t= A challenge password\nchallengePassword_min\t\t=
+    4\nchallengePassword_max\t\t= 20\n\nunstructuredName\t\t= An optional company
+    name\n\n[ usr_cert ]\n\n# These extensions are added when 'ca' signs a request.\n\n#
+    This goes against PKIX guidelines but some CAs do it and some software\n# requires
+    this to avoid interpreting an end user certificate as a CA.\n\nbasicConstraints=CA:FALSE\n\n#
+    Here are some examples of the usage of nsCertType. If it is omitted\n# the certificate
+    can be used for anything *except* object signing.\n\n# This is OK for an SSL server.\n#
+    nsCertType\t\t\t= server\n\n# For an object signing certificate this would be
+    used.\n# nsCertType = objsign\n\n# For normal client use this is typical\n# nsCertType
+    = client, email\n\n# and for everything including object signing:\n# nsCertType
+    = client, email, objsign\n\n# This is typical in keyUsage for a client certificate.\n#
+    keyUsage = nonRepudiation, digitalSignature, keyEncipherment\n\n# This will be
+    displayed in Netscape's comment listbox.\nnsComment\t\t\t= \"OpenSSL Generated
+    Certificate\"\n\n# PKIX recommendations harmless if included in all certificates.\nsubjectKeyIdentifier=hash\nauthorityKeyIdentifier=keyid,issuer\n\n#
+    This stuff is for subjectAltName and issuerAltname.\n# Import the email address.\n#
+    subjectAltName=email:copy\n# An alternative to produce certificates that aren't\n#
+    deprecated according to PKIX.\n# subjectAltName=email:move\n\n# Copy subject details\n#
+    issuerAltName=issuer:copy\n\n#nsCaRevocationUrl\t\t= http://www.domain.dom/ca-crl.pem\n#nsBaseUrl\n#nsRevocationUrl\n#nsRenewalUrl\n#nsCaPolicyUrl\n#nsSslServerName\n\n#
+    This is required for TSA certificates.\n# extendedKeyUsage = critical,timeStamping\n\n[
+    v3_req ]\n\n# Extensions to add to a certificate request\n\nbasicConstraints =
+    CA:FALSE\nkeyUsage = nonRepudiation, digitalSignature, keyEncipherment\n\n[ v3_ca
+    ]\n\n\n# Extensions for a typical CA\n\n\n# PKIX recommendation.\n\nsubjectKeyIdentifier=hash\n\nauthorityKeyIdentifier=keyid:always,issuer\n\nbasicConstraints
+    = critical,CA:true\n\n# Key usage: this is typical for a CA certificate. However
+    since it will\n# prevent it being used as an test self-signed certificate it is
+    best\n# left out by default.\n# keyUsage = cRLSign, keyCertSign\n\n# Some might
+    want this also\n# nsCertType = sslCA, emailCA\n\n# Include email address in subject
+    alt name: another PKIX recommendation\n# subjectAltName=email:copy\n# Copy issuer
+    details\n# issuerAltName=issuer:copy\n\n# DER hex encoding of an extension: beware
+    experts only!\n# obj=DER:02:03\n# Where 'obj' is a standard or added object\n#
+    You can even override a supported extension:\n# basicConstraints= critical, DER:30:03:01:01:FF\n\n[
+    v3_intermediate_ca ]\nsubjectKeyIdentifier = hash\nauthorityKeyIdentifier = keyid:always,issuer\nbasicConstraints
+    = critical, CA:true, pathlen:0\nkeyUsage = critical, digitalSignature, cRLSign,
+    keyCertSign\n\n[ crl_ext ]\n\n# CRL extensions.\n# Only issuerAltName and authorityKeyIdentifier
+    make any sense in a CRL.\n\n# issuerAltName=issuer:copy\nauthorityKeyIdentifier=keyid:always\n\n[
+    proxy_cert_ext ]\n# These extensions should be added when creating a proxy certificate\n\n#
+    This goes against PKIX guidelines but some CAs do it and some software\n# requires
+    this to avoid interpreting an end user certificate as a CA.\n\nbasicConstraints=CA:FALSE\n\n#
+    Here are some examples of the usage of nsCertType. If it is omitted\n# the certificate
+    can be used for anything *except* object signing.\n\n# This is OK for an SSL server.\n#
+    nsCertType\t\t\t= server\n\n# For an object signing certificate this would be
+    used.\n# nsCertType = objsign\n\n# For normal client use this is typical\n# nsCertType
+    = client, email\n\n# and for everything including object signing:\n# nsCertType
+    = client, email, objsign\n\n# This is typical in keyUsage for a client certificate.\n#
+    keyUsage = nonRepudiation, digitalSignature, keyEncipherment\n\n# This will be
+    displayed in Netscape's comment listbox.\nnsComment\t\t\t= \"OpenSSL Generated
+    Certificate\"\n\n# PKIX recommendations harmless if included in all certificates.\nsubjectKeyIdentifier=hash\nauthorityKeyIdentifier=keyid,issuer\n\n#
+    This stuff is for subjectAltName and issuerAltname.\n# Import the email address.\n#
+    subjectAltName=email:copy\n# An alternative to produce certificates that aren't\n#
+    deprecated according to PKIX.\n# subjectAltName=email:move\n\n# Copy subject details\n#
+    issuerAltName=issuer:copy\n\n#nsCaRevocationUrl\t\t= http://www.domain.dom/ca-crl.pem\n#nsBaseUrl\n#nsRevocationUrl\n#nsRenewalUrl\n#nsCaPolicyUrl\n#nsSslServerName\n\n#
+    This really needs to be in place for it to be a proxy certificate.\nproxyCertInfo=critical,language:id-ppl-anyLanguage,pathlen:3,policy:foo\n"
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2025-12-27T08:50:09Z"
+  name: openssl
+  namespace: default
+  resourceVersion: "21931587"
+  uid: c95fa873-660b-401a-b689-ac43235b68ca
