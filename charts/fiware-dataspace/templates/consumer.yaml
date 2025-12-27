@@ -846,7 +846,7 @@ spec:
         rainbow:
           enabled: true
           db:
-            url: postgresql
+            url: postgresql.{{ .Values.global.consumer.namespace }}.svc.cluster.local
             user: postgres
             existingSecret: database-secret
             passwordKey: postgres-admin-password
@@ -1082,7 +1082,7 @@ spec:
               host: fancy-marketplace.{{ .Values.global.consumer.domainSuffix }}
               upstream:
                 nodes:
-                  verifier:3000: 1
+                  verifier.{{ .Values.global.consumer.namespace }}.svc.cluster.local:3000: 1
                 type: roundrobin
               plugins:
                 proxy-rewrite:
@@ -1091,7 +1091,7 @@ spec:
               host: fancy-marketplace.{{ .Values.global.consumer.domainSuffix }}
               upstream:
                 nodes:
-                  tm-forum-api:8080: 1
+                  tm-forum-api.{{ .Values.global.consumer.namespace }}.svc.cluster.local:8080: 1
                 type: roundrobin
               plugins:
                 openid-connect:
@@ -1135,26 +1135,26 @@ spec:
             ## Config for Trusted Issuers List
             trusted-issuers-list:
               ## URL of the Trusted Issuers List Service
-              url: http://trusted-issuers-list:8080
+              url: http://trusted-issuers-list.{{ .Values.global.consumer.namespace }}.svc.cluster.local:8080
             ## Config for the TM Forum Service hosting the APIs
             product-order:
               ## URL of the TM Forum Service hosting the Product Ordering API
-              url: http://consumer-tm-forum-api-product-ordering-management:8080
+              url: http://{{ .Values.global.consumer.namespace }}-tm-forum-api-product-ordering-management.{{ .Values.global.consumer.namespace }}.svc.cluster.local:8080
             party:
               ## URL of the TM Forum Service hosting the Party API
-              url: http://consumer-tm-forum-api-party-catalog:8080
+              url: http://{{ .Values.global.consumer.namespace }}-tm-forum-api-party-catalog.{{ .Values.global.consumer.namespace }}.svc.cluster.local:8080
             product-catalog:
               ## URL of the TM Forum Service hosting the Product Catalog API
-              url: http://consumer-tm-forum-api-product-catalog:8080
+              url: http://{{ .Values.global.consumer.namespace }}-tm-forum-api-product-catalog.{{ .Values.global.consumer.namespace }}.svc.cluster.local:8080
             service-catalog:
               ## URL of the TM Forum Service hosting the Service Catalog API
-              url: http://consumer-tm-forum-api-service-catalog:8080
+              url: http://{{ .Values.global.consumer.namespace }}-tm-forum-api-service-catalog.{{ .Values.global.consumer.namespace }}.svc.cluster.local:8080
             tmforum-agreement-api:
               ## URL of the TM Forum Service hosting the Agreement API
-              url: http://consumer-tm-forum-api-agreement:8080
+              url: http://{{ .Values.global.consumer.namespace }}-tm-forum-api-agreement.{{ .Values.global.consumer.namespace }}.svc.cluster.local:8080
             quote:
               ## URL for TM Forum Service hosting the Quote API
-              url: http://consumer-tm-forum-api-quote:8080
+              url: http://{{ .Values.global.consumer.namespace }}-tm-forum-api-quote.{{ .Values.global.consumer.namespace }}.svc.cluster.local:8080
           deployment:
             # init containers to be used for the local demo
             initContainers:
