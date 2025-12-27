@@ -26,9 +26,9 @@ In order to interact with the system, the following tools are also helpful:
 ### Configure the ArgoCD application
 
 Prior to deploying the Dataspace, the ArgoCD application must be modified to set:
-- A domain name for the consumer
-- A domain name for the procucer
-- A domain name for the trust-ancher
+- A domain name for the consumer (e.g. dataconsumer.fr)
+- A domain name for the procucer (e.g  dataprovider.fr)
+- A domain name for the trust-ancher (e.g trust-anchor.fr)
 
 
 ### Deploy the Dataspace 
@@ -56,19 +56,19 @@ f.e. [Gaia-X Digital Clearing Houses](https://gaia-x.eu/gxdch)) and could be reu
 The local Data Spaces comes with the [FIWARE Trusted Issuers List](https://github.com/FIWARE/trusted-issuers-list) as a
 rather simple implementation of that API, providing CRUD functionality
 for Issuers and storage in an MySQL Database. After deployment, the API is available
-at ```http://tir.127.0.0.1.nip.io:8080```. Both participants
+at ```http://tir.trust-anchor.fr```. Both participants
 are automatically registered as "Trusted Issuers" in the registry with their did's.
 
 Get a list of the issuers:
 
 ```shell
-    curl -X GET http://tir.127.0.0.1.nip.io:8080/v4/issuers | jq .
+    curl -X GET http://tir.trust-anchor.fr/v4/issuers | jq .
 ```
 
 A new issuer could for example be registered via:
 
 ```shell
-  curl -X POST http://til.127.0.0.1.nip.io:8080/issuer \
+  curl -X POST http://til.trust-anchor.fr/issuer \
     --header 'Content-Type: application/json' \
     --data '{
       "did": "did:key:myKey",
@@ -110,10 +110,10 @@ It comes with 2 preconfigured users:
   via ```kubectl get secret -n consumer -o json issuance-secret | jq '.data."keycloak-admin"' -r | base64 --decode```
 * the `test-user` - it has a fixed password, set to "test"
 
-The admin-console of keycloak is available at: ```https://keycloak-consumer.127.0.0.1.nip.io:8443```, login with
+The admin-console of keycloak is available at: ```https://keycloak.dataconsumer.fr```, login with
 the `keycloak-admin`
 The credentials issuance in the account-console is available
-at: ```https://keycloak-consumer.127.0.0.1.nip.io:8443/realms/test-realm/account/oid4vci```, login with the `test-user`
+at: ```https://keycloak.dataconsumer.fr/realms/test-realm/account/oid4vci```, login with the `test-user`
 
 In order to retrieve an actual credential two ways are available:
 
@@ -134,7 +134,7 @@ In order to retrieve an actual credential two ways are available:
 Get an AccessToken from Keycloak:
 
 ```shell
-  export ACCESS_TOKEN=$(curl -s -k -x localhost:8888 -X POST https://keycloak-consumer.127.0.0.1.nip.io/realms/test-realm/protocol/openid-connect/token \
+  export ACCESS_TOKEN=$(curl -s -k -x localhost:8888 -X POST https://keycloak.dataconsumer.fr/realms/test-realm/protocol/openid-connect/token \
     --header 'Accept: */*' \
     --header 'Content-Type: application/x-www-form-urlencoded' \
     --data grant_type=password \
@@ -148,13 +148,13 @@ Get an AccessToken from Keycloak:
 Get the credentials issuer information:
 
 ```shell
-  curl -k -x localhost:8888 -X GET https://keycloak-consumer.127.0.0.1.nip.io/realms/test-realm/.well-known/openid-credential-issuer | jq .
+  curl -k -x localhost:8888 -X GET https://keycloak.dataconsumer.fr/realms/test-realm/.well-known/openid-credential-issuer | jq .
 ```
 
 Get a credential offer uri(for the `user-credential), using the retrieved AccessToken:
 
 ```shell
-  export OFFER_URI=$(curl -s -k -x localhost:8888 -X GET 'https://keycloak-consumer.127.0.0.1.nip.io/realms/test-realm/protocol/oid4vc/credential-offer-uri?credential_configuration_id=user-credential' \
+  export OFFER_URI=$(curl -s -k -x localhost:8888 -X GET 'https://keycloak.dataconsumer.fr/realms/test-realm/protocol/oid4vc/credential-offer-uri?credential_configuration_id=user-credential' \
     --header "Authorization: Bearer ${ACCESS_TOKEN}" | jq '"\(.issuer)\(.nonce)"' -r); echo ${OFFER_URI}
 ```
 
@@ -168,7 +168,7 @@ Use the offer uri(e.g. the `issuer`and `nonce` fields), to retrieve the actual o
 Exchange the pre-authorized code from the offer with an AccessToken at the authorization server:
 
 ```shell
-  export CREDENTIAL_ACCESS_TOKEN=$(curl -s -k -x localhost:8888 -X POST https://keycloak-consumer.127.0.0.1.nip.io/realms/test-realm/protocol/openid-connect/token \
+  export CREDENTIAL_ACCESS_TOKEN=$(curl -s -k -x localhost:8888 -X POST https://keycloak.dataconsumer.fr/realms/test-realm/protocol/openid-connect/token \
     --header 'Accept: */*' \
     --header 'Content-Type: application/x-www-form-urlencoded' \
     --data grant_type=urn:ietf:params:oauth:grant-type:pre-authorized_code \
@@ -178,7 +178,7 @@ Exchange the pre-authorized code from the offer with an AccessToken at the autho
 Use the returned access token to get the actual credential:
 
 ```shell
-  export VERIFIABLE_CREDENTIAL=$(curl -s -k -x localhost:8888 -X POST https://keycloak-consumer.127.0.0.1.nip.io/realms/test-realm/protocol/oid4vc/credential \
+  export VERIFIABLE_CREDENTIAL=$(curl -s -k -x localhost:8888 -X POST https://keycloak.dataconsumer.fr/realms/test-realm/protocol/oid4vc/credential \
     --header 'Accept: */*' \
     --header 'Content-Type: application/json' \
     --header "Authorization: Bearer ${CREDENTIAL_ACCESS_TOKEN}" \
@@ -232,7 +232,7 @@ It allows every participant to access entities of type ```EnergyReport```.
 The policy can be created at the PAP via:
 
 ```shell
-  curl -s -X 'POST' http://pap-provider.127.0.0.1.nip.io:8080/policy \
+  curl -s -X 'POST' http://pap-provider.dataprovider.fr/policy \
     -H 'Content-Type: application/json' \
     -d  '{ 
             "@context": {
@@ -275,12 +275,12 @@ The policy can be created at the PAP via:
 ```
 
 Data can be created through the NGSI-LD API itself. In order to make interaction easier, its directly available through
-an ingress at ```http://scorpio-provider.127.0.0.1.nip.io/ngsi-ld/v1```. In
+an ingress at ```http://scorpio-provider.dataprovider.fr/ngsi-ld/v1```. In
 real environments, no endpoint should be publicly available without beeing protected by the authorization framework.
 Create an entity via:
 
 ```shell
-  curl -s -X POST http://scorpio-provider.127.0.0.1.nip.io:8080/ngsi-ld/v1/entities \
+  curl -s -X POST http://scorpio-provider.dataprovider.fr/ngsi-ld/v1/entities \
     -H 'Accept: application/json' \
     -H 'Content-Type: application/json' \
     -d '{
@@ -297,7 +297,7 @@ Create an entity via:
     }'
 ```
 
-## Demo Interactions
+## MVD Interactions
 
 Once everything is deployed and configured(e.g. the consumer received a credential -
 see [The Data Consumer](#the-data-consumer) - and policy/entity are setup - see [The Data Provider](#the-data-provider))
@@ -330,10 +330,10 @@ In the response, the grant type `vp_token` will be present, indicating the suppo
 
 ```json
 {
-  "issuer": "https://provider-verifier.127.0.0.1.nip.io:8443",
-  "authorization_endpoint": "https://provider-verifier.127.0.0.1.nip.io:8443",
-  "token_endpoint": "https://provider-verifier.127.0.0.1.nip.io:8443/services/data-service/token",
-  "jwks_uri": "https://provider-verifier.127.0.0.1.nip.io:8443/.well-known/jwks",
+  "issuer": "https://provider-verifier.dataprovider.fr",
+  "authorization_endpoint": "https://provider-verifier.dataprovider.fr",
+  "token_endpoint": "https://provider-verifier.dataprovider.fr/services/data-service/token",
+  "jwks_uri": "https://provider-verifier.dataprovider.fr/.well-known/jwks",
   "scopes_supported": [
     "default"
   ],
@@ -357,7 +357,7 @@ In the response, the grant type `vp_token` will be present, indicating the suppo
 }
 ```
 
-With that information, the authentication flow at the verifier(e.g.`"https://provider-verifier.127.0.0.1.nip.io:8443`)
+With that information, the authentication flow at the verifier(e.g.`"https://provider-verifier.dataprovider.fr`)
 can be started.
 First, the credential needs to be encoded into a vp_token. If you want to do that manually, first a did and the
 corresponding key-material is required.
@@ -458,7 +458,7 @@ Similar to the interactions required for making the energy reports available, M&
 Since the offerings are handled through the TMForum APIs, the policies belong to them:
 1. Allow every authenticated participant to read offerings:
 ```shell
-  curl -s -X 'POST' http://pap-provider.127.0.0.1.nip.io:8080/policy \
+  curl -s -X 'POST' http://pap-provider.dataprovider.fr/policy \
     -H 'Content-Type: application/json' \
     -d  '{
           "@context": {
@@ -501,7 +501,7 @@ Since the offerings are handled through the TMForum APIs, the policies belong to
 ```
 2. Allow 'REPRESENTATIVES' of authenticated participants to register as customer at M&P Operations:
 ```shell
-  curl -s -X 'POST' http://pap-provider.127.0.0.1.nip.io:8080/policy \
+  curl -s -X 'POST' http://pap-provider.dataprovider.fr/policy \
     -H 'Content-Type: application/json' \
     -d  '{
           "@context": {
@@ -579,7 +579,7 @@ creation of such through the action `"tmf:create"`. Additionaly, it restricts th
 
 3. Allow 'REPRESENTATIVES' to order products: 
 ```shell
-  curl -s -X 'POST' http://pap-provider.127.0.0.1.nip.io:8080/policy \
+  curl -s -X 'POST' http://pap-provider.dataprovider.fr/policy \
     -H 'Content-Type: application/json' \
     -d  '{
           "@context": {
@@ -656,7 +656,7 @@ creation of such through the action `"tmf:create"`. Additionaly, it restricts th
 4. Allow "OPERATORS" to retrieve information about the clusters: 
 
 ```shell
-  curl -s -X 'POST' http://pap-provider.127.0.0.1.nip.io:8080/policy \
+  curl -s -X 'POST' http://pap-provider.dataprovider.fr/policy \
     -H 'Content-Type: application/json' \
     -d  '{
               "@context": {
@@ -992,15 +992,15 @@ the steps are combined within a script:
 
 1. Get the LegalPersonCredential for the normal employee:
 ```shell
-export USER_CREDENTIAL=$(./doc/scripts/get_credential.sh https://keycloak-consumer.127.0.0.1.nip.io user-credential employee); echo ${USER_CREDENTIAL}
+export USER_CREDENTIAL=$(./doc/scripts/get_credential.sh https://keycloak.dataconsumer.fr user-credential employee); echo ${USER_CREDENTIAL}
 ```
 2. Get the LegalPersonCredential for the representative:
 ```shell
-export REP_CREDENTIAL=$(./doc/scripts/get_credential.sh https://keycloak-consumer.127.0.0.1.nip.io user-credential representative); echo ${REP_CREDENTIAL}
+export REP_CREDENTIAL=$(./doc/scripts/get_credential.sh https://keycloak.dataconsumer.fr user-credential representative); echo ${REP_CREDENTIAL}
 ```
 3. Get the OperatorCredential for the operator:
 ```shell
-export OPERATOR_CREDENTIAL=$(./doc/scripts/get_credential.sh https://keycloak-consumer.127.0.0.1.nip.io operator-credential operator); echo ${OPERATOR_CREDENTIAL}
+export OPERATOR_CREDENTIAL=$(./doc/scripts/get_credential.sh https://keycloak.dataconsumer.fr operator-credential operator); echo ${OPERATOR_CREDENTIAL}
 ```
 
 #### Buy access and create cluster
@@ -1039,7 +1039,7 @@ In order to prove that not every user can just create a cluster, try the followi
     ./doc/scripts/get_access_token_oid4vp.sh http://mp-data-service.127.0.0.1.nip.io:8080 $OPERATOR_CREDENTIAL operator
 ```
 
-> :bulb: For easier access, the identity(in form of the did) of the consumer is available at ```http://did-consumer.127.0.0.1.nip.io:8080/did-material/did.env```.
+> :bulb: For easier access, the identity(in form of the did) of the consumer is available at ```http://did-consumer.dataprovider.fr/did-material/did.env```.
 
 3. Export the Fancy Marketplace's did:
 ```shell
@@ -1492,7 +1492,7 @@ Once everything is properly configured, the Dataspace can be deployed locally vi
 The interaction is the same as in all previously described steps - see [Demo Interactions](#demo-interactions). The most visible difference is in the credential.
 Get one via:
 ```shell
- export ELSI_CREDENTIAL=$(./doc/scripts/get_credential.sh http://keycloak-consumer.127.0.0.1.nip.io:8080 user-credential); echo ${ELSI_CREDENTIAL}
+ export ELSI_CREDENTIAL=$(./doc/scripts/get_credential.sh http://keycloak.dataconsumer.fr:8080 user-credential); echo ${ELSI_CREDENTIAL}
 ```
 Now it can be inspected f.e. on [jwt.io](https://jwt.io/). The certificate chain should be included in the jwt-headers and the issuer is the configured `did:elsi`
 
@@ -1514,17 +1514,17 @@ Available ingresses:
 
 | URL                                              | Proxy URL                                  | Component                                                                  | Participant  | Comment                                                                             | Only for Demo                                        |
 |--------------------------------------------------|--------------------------------------------|----------------------------------------------------------------------------|--------------|-------------------------------------------------------------------------------------|------------------------------------------------------|
-| http://tir.127.0.0.1.nip.io:8080/                | http://tir.127.0.0.1.nip.io/               | [Trusted Issuers Registry](https://github.com/FIWARE/trusted-issuers-list) | Trust Anchor | Provides the list of trusted issuers                                                | no                                                   |
-| http://til.127.0.0.1.nip.io:8080/                | http://til.127.0.0.1.nip.io/               | [Trusted Issuers List API](https://github.com/FIWARE/trusted-issuers-list) | Trust Anchor | Create,Update,Delete functionality for the Trusted Issuers Registry                 | should not be publicly available in real data spaces |
-| http://keycloak-consumer.127.0.0.1.nip.io:8080/  | https://keycloak-consumer.127.0.0.1.nip.io | [Keycloak](https://github.com/keycloak/keycloak)                           | Consumer     | Issues credentials on behalf of the consumer                                        | no                                                   |
+| http://tir.trust-anchor.fr/                | http://tir.127.0.0.1.nip.io/               | [Trusted Issuers Registry](https://github.com/FIWARE/trusted-issuers-list) | Trust Anchor | Provides the list of trusted issuers                                                | no                                                   |
+| http://til.trust-anchor.fr/                | http://til.127.0.0.1.nip.io/               | [Trusted Issuers List API](https://github.com/FIWARE/trusted-issuers-list) | Trust Anchor | Create,Update,Delete functionality for the Trusted Issuers Registry                 | should not be publicly available in real data spaces |
+| http://keycloak.dataconsumer.fr/  | https://keycloak.dataconsumer.fr | [Keycloak](https://github.com/keycloak/keycloak)                           | Consumer     | Issues credentials on behalf of the consumer                                        | no                                                   |
 | https://marketplace.127.0.0.1.nip.io:8443/       | https://marketplace.127.0.0.1.nip.io | [BAE Marketplace](https://github.com/FIWARE-TMForum/business-ecosystem-logic-proxy)                    | Provider     | Provide marketplace functionality                                                   | no                                                   |
-| http://keycloak-provider.127.0.0.1.nip.io:8080/  | https://keycloak-provider.127.0.0.1.nip.io | [Keycloak](https://github.com/keycloak/keycloak)                           | Provider     | Issues credentials on behalf of the provider                                        | no                                                   |
-| http://did-consumer.127.0.0.1.nip.io:8080/       | http://did-consumer.127.0.0.1.nip.io/      | [did-helper](https://github.com/wistefan/did-helper)                       | Consumer     | Helper to provide access to the consumers did and key material                      | yes, should never be public                          |
+| http://keycloak-provider.dataprovider.fr/  | https://keycloak-provider.dataprovider.fr | [Keycloak](https://github.com/keycloak/keycloak)                           | Provider     | Issues credentials on behalf of the provider                                        | no                                                   |
+| http://did-consumer.dataprovider.fr/       | http://did-consumer.dataprovider.fr/      | [did-helper](https://github.com/wistefan/did-helper)                       | Consumer     | Helper to provide access to the consumers did and key material                      | yes, should never be public                          |
 | http://mp-data-service.127.0.0.1.nip.io:8080/    | http://mp-data-service.127.0.0.1.nip.io/   | [Apisix](https://apisix.apache.org/)                                       | Provider     | ApiGateway to be used as entry point to all secured services, f.e. the data-service | no                                                   |
-| https://provider-verifier.127.0.0.1.nip.io:8443/ | https://provider-verifier.io               | [VCVerifier](https://github.com/FIWARE/VCVerifier)                         | Provider     | Authentication endpoint, used for authenticating through VerifiableCredentials      | no                                                   |
-| http://did-provider.127.0.0.1.nip.io:8080/       | http://did-provider.127.0.0.1.nip.io/      | [did-helper](https://github.com/wistefan/did-helper)                       | Provider     | Helper to provide access to the providers did and key material                      | yes, should never be public                          |
-| http://scorpio-provider.127.0.0.1.nip.io:8080/   | http://scorpio-provider.127.0.0.1.nip.io/  | [Scorpio ContextBroker](https://github.com/ScorpioBroker/ScorpioBroker)    | Provider     | Provides direct access to the context broker, to be used for test setup.            | yes, should only be available through the PEP        |
-| http://pap-provider.127.0.0.1.nip.io:8080/       | http://pap-provider.127.0.0.1.nip.io       | [ODRL-PAP](https://github.com/wistefan/odrl-pap)                           | Provider     | Allows configuration of the access policie, used for authorization                  | yes, should only be available to authorized users    |
+| https://provider-verifier.dataprovider.fr/ | https://provider-verifier.io               | [VCVerifier](https://github.com/FIWARE/VCVerifier)                         | Provider     | Authentication endpoint, used for authenticating through VerifiableCredentials      | no                                                   |
+| http://did-provider.dataprovider.fr/       | http://did-provider.dataprovider.fr/      | [did-helper](https://github.com/wistefan/did-helper)                       | Provider     | Helper to provide access to the providers did and key material                      | yes, should never be public                          |
+| http://scorpio-provider.dataprovider.fr/   | http://scorpio-provider.dataprovider.fr/  | [Scorpio ContextBroker](https://github.com/ScorpioBroker/ScorpioBroker)    | Provider     | Provides direct access to the context broker, to be used for test setup.            | yes, should only be available through the PEP        |
+| http://pap-provider.dataprovider.fr/       | http://pap-provider.dataprovider.fr       | [ODRL-PAP](https://github.com/wistefan/odrl-pap)                           | Provider     | Allows configuration of the access policie, used for authorization                  | yes, should only be available to authorized users    |
 
 
 ### Participant Identity
