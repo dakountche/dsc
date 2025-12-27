@@ -984,7 +984,7 @@ spec:
             server:
               host: https://verifier.fancy-marketplace.biz
             configRepo:
-              configEndpoint: http://credentials-config-service:8080
+              configEndpoint: http://credentials-config-service.{{ .Values.global.consumer.namespace }}.svc.cluster.local:8080
             additionalVolumes:
               - name: signing-key
                 secret:
