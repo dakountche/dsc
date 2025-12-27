@@ -1542,13 +1542,5 @@ more organization-focused once like [did:web](https://w3c-ccg.github.io/did-meth
 
 ### Deployment
 
-The deployment leverages the [k3s-maven-plugin](https://github.com/kokuwaio/k3s-maven-plugin) to stay as close to the real deployments as possible,
-while providing integration with the [integration tests](../it/src/test).
-In order to build a concrete deployment, [maven](https://maven.apache.org/) executes the following steps, that would also be done by a `normal` deployment process:
+The deployment leverages  Argocd. 
 
-1. Copy the required charts([charts/](../charts)) to the target folder, e.g. `target/charts`
-2. Copy additionally required resources([k3s/infra & k3s/namespaces](../k3s/)) to the target folder, e.g. `target/k3s`
-3. Execute `helm template` on the charts, with the local values provided for each participant(e.g. [trust-anchor](../k3s/trust-anchor.yaml), [provider](../k3s/provider.yaml) and [consumer](../k3s/consumer.yaml)) and copy the manifests to the target folder(e.g. `target/k3s`)
-4. Spin up the cluster
-5. Apply the infrastructure resources to the cluster, via `kubectl apply`
-6. Apply the charts to the cluster, via `kubectl apply`
