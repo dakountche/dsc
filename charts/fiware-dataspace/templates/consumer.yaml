@@ -1013,7 +1013,7 @@ spec:
               - name: HTTP_PROXY
                 value: "http://squid-proxy.infra.svc.cluster.local:8888"
               - name: NO_PROXY
-                value: "credentials-config-service,w3.org,trusted-issuers-list"
+                value: "credentials-config-service.{{ .Values.global.consumer.namespace }}.svc.cluster.local,w3.org,trusted-issuers-list.{{ .Values.global.consumer.namespace }}.svc.cluster.local"
             initContainers:
               # add the self generated root ca to the system truststore
               - name: add-root-ca
