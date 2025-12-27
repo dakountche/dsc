@@ -936,7 +936,7 @@ spec:
                     credentials:
                       - type: LegalPersonCredential
                         trustedParticipantsLists:
-                          - http://tir.{{ .Values.global.consumer.domainSuffix }}
+                          - http://tir.trust-anchor.svc.cluster.local:8080
                         # we want that every participant can access the marketplace and register
                         trustedIssuersLists:
                           - "*"
@@ -973,7 +973,7 @@ spec:
             logging:
               level: DEBUG
             verifier:
-              tirAddress: http://tir.{{ .Values.global.consumer.domainSuffix }}/
+              tirAddress: http://tir.trust-anchor.svc.cluster.local:8080
               did: did:web:fancy-marketplace.biz
               supportedModes: ["byValue", "byReference"]
               clientIdentification:
