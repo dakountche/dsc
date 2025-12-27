@@ -134,7 +134,7 @@ In order to retrieve an actual credential two ways are available:
 Get an AccessToken from Keycloak:
 
 ```shell
-  export ACCESS_TOKEN=$(curl -s -k -x localhost:8888 -X POST https://keycloak.dataconsumer.fr/realms/test-realm/protocol/openid-connect/token \
+  export ACCESS_TOKEN=$(curl -s -k  -X POST https://keycloak.dataconsumer.fr/realms/test-realm/protocol/openid-connect/token \
     --header 'Accept: */*' \
     --header 'Content-Type: application/x-www-form-urlencoded' \
     --data grant_type=password \
@@ -148,27 +148,27 @@ Get an AccessToken from Keycloak:
 Get the credentials issuer information:
 
 ```shell
-  curl -k -x localhost:8888 -X GET https://keycloak.dataconsumer.fr/realms/test-realm/.well-known/openid-credential-issuer | jq .
+  curl -k  -X GET https://keycloak.dataconsumer.fr/realms/test-realm/.well-known/openid-credential-issuer | jq .
 ```
 
 Get a credential offer uri(for the `user-credential), using the retrieved AccessToken:
 
 ```shell
-  export OFFER_URI=$(curl -s -k -x localhost:8888 -X GET 'https://keycloak.dataconsumer.fr/realms/test-realm/protocol/oid4vc/credential-offer-uri?credential_configuration_id=user-credential' \
+  export OFFER_URI=$(curl -s -k  -X GET 'https://keycloak.dataconsumer.fr/realms/test-realm/protocol/oid4vc/credential-offer-uri?credential_configuration_id=user-credential' \
     --header "Authorization: Bearer ${ACCESS_TOKEN}" | jq '"\(.issuer)\(.nonce)"' -r); echo ${OFFER_URI}
 ```
 
 Use the offer uri(e.g. the `issuer`and `nonce` fields), to retrieve the actual offer:
 
 ```shell
-  export PRE_AUTHORIZED_CODE=$(curl -s -k -x localhost:8888 -X GET ${OFFER_URI} \
+  export PRE_AUTHORIZED_CODE=$(curl -s -k  -X GET ${OFFER_URI} \
     --header "Authorization: Bearer ${ACCESS_TOKEN}" | jq '.grants."urn:ietf:params:oauth:grant-type:pre-authorized_code"."pre-authorized_code"' -r); echo ${PRE_AUTHORIZED_CODE}
 ```
 
 Exchange the pre-authorized code from the offer with an AccessToken at the authorization server:
 
 ```shell
-  export CREDENTIAL_ACCESS_TOKEN=$(curl -s -k -x localhost:8888 -X POST https://keycloak.dataconsumer.fr/realms/test-realm/protocol/openid-connect/token \
+  export CREDENTIAL_ACCESS_TOKEN=$(curl -s -k  -X POST https://keycloak.dataconsumer.fr/realms/test-realm/protocol/openid-connect/token \
     --header 'Accept: */*' \
     --header 'Content-Type: application/x-www-form-urlencoded' \
     --data grant_type=urn:ietf:params:oauth:grant-type:pre-authorized_code \
@@ -178,7 +178,7 @@ Exchange the pre-authorized code from the offer with an AccessToken at the autho
 Use the returned access token to get the actual credential:
 
 ```shell
-  export VERIFIABLE_CREDENTIAL=$(curl -s -k -x localhost:8888 -X POST https://keycloak.dataconsumer.fr/realms/test-realm/protocol/oid4vc/credential \
+  export VERIFIABLE_CREDENTIAL=$(curl -s -k  -X POST https://keycloak.dataconsumer.fr/realms/test-realm/protocol/oid4vc/credential \
     --header 'Accept: */*' \
     --header 'Content-Type: application/json' \
     --header "Authorization: Bearer ${CREDENTIAL_ACCESS_TOKEN}" \
@@ -427,7 +427,7 @@ The JWT representation of the JWT has to be Base64-encoded(no padding!):
 The vp_token can then be exchanged for the access-token
 
 ```shell
-  export DATA_SERVICE_ACCESS_TOKEN=$(curl -s -k -x localhost:8888 -X POST $TOKEN_ENDPOINT \
+  export DATA_SERVICE_ACCESS_TOKEN=$(curl -s -k  -X POST $TOKEN_ENDPOINT \
     --header 'Accept: */*' \
     --header 'Content-Type: application/x-www-form-urlencoded' \
     --data grant_type=vp_token \
