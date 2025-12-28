@@ -750,7 +750,7 @@ export PROVIDER_DID="did:web:mp-operations.org"
 
   1. "small": 
   ```shell
-  export PRODUCT_SPEC_SMALL_ID=$(curl -X 'POST' http://tm-forum-api.127.0.0.1.nip.io:8080/tmf-api/productCatalogManagement/v4/productSpecification \
+  export PRODUCT_SPEC_SMALL_ID=$(curl -X 'POST' http://tm-forum-api.dataprovider.fr/tmf-api/productCatalogManagement/v4/productSpecification \
     -H 'Content-Type: application/json;charset=utf-8' \
     -d "{
       \"brand\": \"M&P Operations\",
@@ -855,7 +855,7 @@ export PROVIDER_DID="did:web:mp-operations.org"
 
   1. "full": 
   ```shell
-  export PRODUCT_SPEC_FULL_ID=$(curl -X 'POST' http://tm-forum-api.127.0.0.1.nip.io:8080/tmf-api/productCatalogManagement/v4/productSpecification \
+  export PRODUCT_SPEC_FULL_ID=$(curl -X 'POST' http://tm-forum-api.dataprovider.fr/tmf-api/productCatalogManagement/v4/productSpecification \
     -H 'Content-Type: application/json;charset=utf-8' \
     -d "{
       \"brand\": \"M&P Operations\",
@@ -956,7 +956,7 @@ export PROVIDER_DID="did:web:mp-operations.org"
 
   1. "small":
   ```shell
-  export PRODUCT_OFFERING_SMALL_ID=$(curl -X 'POST' http://tm-forum-api.127.0.0.1.nip.io:8080/tmf-api/productCatalogManagement/v4/productOffering \
+  export PRODUCT_OFFERING_SMALL_ID=$(curl -X 'POST' http://tm-forum-api.dataprovider.fr/tmf-api/productCatalogManagement/v4/productOffering \
     -H 'Content-Type: application/json;charset=utf-8' \
     -d "{
       \"version\": \"1.0.0\",
@@ -970,7 +970,7 @@ export PROVIDER_DID="did:web:mp-operations.org"
   
   2. "small":
   ```shell
-  export PRODUCT_OFFERING_FULL_ID=$(curl -X 'POST' http://tm-forum-api.127.0.0.1.nip.io:8080/tmf-api/productCatalogManagement/v4/productOffering \
+  export PRODUCT_OFFERING_FULL_ID=$(curl -X 'POST' http://tm-forum-api.dataprovider.fr/tmf-api/productCatalogManagement/v4/productOffering \
     -H 'Content-Type: application/json;charset=utf-8' \
     -d "{
       \"version\": \"1.0.0\",
@@ -1048,8 +1048,8 @@ In order to prove that not every user can just create a cluster, try the followi
 
 4. Register Fancy Marketplace at M&P Operations(as representative, e.g. use the REP_CREDENTIAL):
 ```shell
-  export ACCESS_TOKEN=$(./doc/scripts/get_access_token_oid4vp.sh http://mp-data-service.dataprovider.fr $REP_CREDENTIAL default); echo ${ACCESS_TOKEN}
-  export FANCY_MARKETPLACE_ID=$(curl -X POST http://mp-tmf-api.127.0.0.1.nip.io:8080/tmf-api/party/v4/organization \
+  export ACCESS_TOKEN=$(./doc/scripts/get_access_token_oid4vp.sh http://mp-data-service.dataconsumer.fr $REP_CREDENTIAL default); echo ${ACCESS_TOKEN}
+  export FANCY_MARKETPLACE_ID=$(curl -X POST http://mp-tmf-api.dataconsumer.fr/tmf-api/party/v4/organization \
     -H 'Accept: */*' \
     -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
