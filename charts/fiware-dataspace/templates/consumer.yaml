@@ -875,10 +875,9 @@ spec:
           ingress:
             enabled: true
             host: fancy-marketplace.biz
-            tlsSecret: tls-secret
+            tlsSecret: fancy-marketplace-tls
             annotations:
-              traefik.ingress.kubernetes.io/service.passhostheader: "true"
-              traefik.ingress.kubernetes.io/router.tls: "true"
+              cert-manager.io/cluster-issuer: fiware-dsc-ca
 
         # register the consumer at the til. Only possible if it runs in the same environment and recommendable for demo deployments
         trusted-issuers-list:
@@ -919,12 +918,11 @@ spec:
                   - "/"
         # authentication configuration
         credentials-config-service:
+          database:
+            host: authentication-mysql.{{ .Values.global.consumer.namespace }}.svc.cluster.local
           deployment:
             image:
               tag: 3.3.3
-          additionalEnvVars:
-            - name: FLYWAY_DATASOURCES_DEFAULT_LOCATIONS
-              value: classpath:db/migration/common,classpath:db/migration/mysql
           registration:
             enabled: true
             services:
@@ -960,11 +958,11 @@ spec:
           ingress:
             enabled: true
             annotations:
-              traefik.ingress.kubernetes.io/router.tls: "true"
+              cert-manager.io/cluster-issuer: fiware-dsc-ca
             tls:
               - hosts:
                   - verifier.fancy-marketplace.biz
-                secretName: tls-secret
+                secretName: verifier-tls
             hosts:
               - host: verifier.fancy-marketplace.biz
                 paths:
@@ -1044,6 +1042,8 @@ spec:
                     curl -X 'POST' 'http://tir.trust-anchor.svc.cluster.local:8080/issuer' -H 'Content-Type: application/json' -d "{\"did\": \"did:web:fancy-marketplace.biz\", \"credentials\": []}"
         # required dbs
         mysql:
+          image:
+            tag: 8.1.0-debian-11-r25
           resourcesPreset: none
           primary:
             persistence:
