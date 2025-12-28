@@ -185,6 +185,8 @@ spec:
                   with_body: true
 
         credentials-config-service:
+          database:
+            host: authentication-mysql.{{ .Values.global.provider.namespace }}.svc.cluster.local
           deployment:
             image:
               tag: 3.3.3
@@ -194,9 +196,6 @@ spec:
               - host: provider-ccs.{{ .Values.global.provider.domainSuffix }}
                 paths:
                   - "/"
-          additionalEnvVars:
-            - name: FLYWAY_DATASOURCES_DEFAULT_LOCATIONS
-              value: classpath:db/migration/common,classpath:db/migration/mysql
           registration:
             enabled: true
             services:
@@ -335,11 +334,11 @@ spec:
           ingress:
             enabled: true
             annotations:
-              traefik.ingress.kubernetes.io/router.tls: "true"
+              cert-manager.io/cluster-issuer: fiware-dsc-ca
             tls:
               - hosts:
                   - verifier.mp-operations.org
-                secretName: tls-secret
+                secretName: verifier-tls
             hosts:
               - host: verifier.mp-operations.org
                 paths:
@@ -460,10 +459,9 @@ spec:
           ingress:
             enabled: true
             annotations:
-              traefik.ingress.kubernetes.io/service.passhostheader: "true"
-              traefik.ingress.kubernetes.io/router.tls: "true"
+              cert-manager.io/cluster-issuer: fiware-dsc-ca
             host: mp-operations.org
-            tlsSecret: tls-secret
+            tlsSecret: operations-tls
          
         dataSpaceConfig:
           enabled: true
