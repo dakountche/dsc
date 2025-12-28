@@ -24,8 +24,7 @@ spec:
           ingress:
             enabled: true
             tls: true
-            secrets:
-              - name: keycloak-tls 
+            tlsSecret: keycloak-tls 
             hostname:  keycloak.{{ .Values.global.consumer.domainSuffix }}
             annotations:
               cert-manager.io/cluster-issuer: fiware-dsc-ca
