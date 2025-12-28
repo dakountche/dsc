@@ -1,0 +1,8 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: fiware-dsc-ca
+  namespace: cert-manager
+spec:
+  ca:
+    secretName: fiware-intermediate-secret-tls
