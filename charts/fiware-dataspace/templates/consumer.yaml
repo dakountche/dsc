@@ -23,9 +23,12 @@ spec:
         keycloak:
           ingress:
             enabled: true
+            tls: true
+            secrets:
+              - name: keycloak-tls 
             hostname:  keycloak.{{ .Values.global.consumer.domainSuffix }}
             annotations:
-              traefik.ingress.kubernetes.io/router.tls: "true"
+              cert-manager.io/cluster-issuer: fiware-dsc-ca
           initContainers:
             - name: register-at-tir
               image: ubuntu

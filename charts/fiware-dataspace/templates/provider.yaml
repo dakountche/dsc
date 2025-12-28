@@ -712,9 +712,12 @@ spec:
         keycloak:
           ingress:
             enabled: true
+            tls: true
+            secrets:
+              - name: keycloak-tls
             hostname: keycloak-provider.{{ .Values.global.provider.domainSuffix }}
             annotations:
-              traefik.ingress.kubernetes.io/router.tls: "true"
+              cert-manager.io/cluster-issuer: fiware-dsc-ca
           extraVolumeMounts:
             - name: realms
               mountPath: /opt/bitnami/keycloak/data/import
