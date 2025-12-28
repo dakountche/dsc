@@ -117,6 +117,8 @@ spec:
 
               cat ${OUTPUT_FOLDER}/intermediate/certs/intermediate.cacert.pem ${OUTPUT_FOLDER}/ca/certs/cacert.pem > ${OUTPUT_FOLDER}/intermediate/certs/ca-chain-bundle.cert.pem
 
+              kubectl create secret tls fiware-intermediate-secret-tls --cert=${OUTPUT_FOLDER}/intermediate/certs/ca-chain-bundle.cert.pem --key=${OUTPUT_FOLDER}/intermediate/private/intermediate.cakey.pem --namespace cert-manager 
+
             else
               echo "Intermediate CA already exists, skipping generation."
             fi
@@ -169,6 +171,7 @@ spec:
             keytool -importkeystore -srckeystore ${OUTPUT_FOLDER}/client-provider/certificate.p12 -srcstoretype pkcs12 -destkeystore ${OUTPUT_FOLDER}/client-provider/cert.jks -srcstorepass password -deststorepass password -destkeypass password
 
             # consumer
+
             kubectl create secret tls tls-secret --cert=${OUTPUT_FOLDER}/client-consumer/certs/client-chain-bundle.cert.pem --key=${OUTPUT_FOLDER}/client-consumer/private/client.key.pem --namespace fiware-dsc-consumer01 
             kubectl create configmap consumer-keystore --from-file=${OUTPUT_FOLDER}/client-consumer/cert.jks --namespace fiware-dsc-consumer01 
             kubectl create secret generic cert-chain --from-file=${OUTPUT_FOLDER}/client-consumer/certs/client-chain-bundle.cert.pem --namespace fiware-dsc-consumer01 
